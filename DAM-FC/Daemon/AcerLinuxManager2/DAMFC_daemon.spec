@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['/home/div/RiderProjects/DAFC-GUI/DAM-FC/Daemon/AcerLinuxManager2/DAMFC_daemon.py'],
+    ['DAMFC_daemon.py'],
     pathex=[],
     binaries=[],
     datas=[],

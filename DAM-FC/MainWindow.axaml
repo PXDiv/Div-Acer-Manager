@@ -257,7 +257,7 @@
                                 <StackPanel Orientation="Vertical" Spacing="20">
                                     <Button x:Name="CompileAndLoadDriversButton" Click="CompileAndLoadDriversButton_OnClick">Compile and Load Drivers</Button>
                                     <Button x:Name="ReloadCompiledDriversButton" Click="ReloadCompiledDriversButton_OnClick">Reload Compiled Drivers</Button>
-                                    <Button x:Name="CleanDriversButton" Click="Clean_Drivers_Button_OnClick">Clean Compiled Drivers</Button>
+                                    <Button x:Name="CleanDriversButton" Click="Clean_Drivers_Button_OnClick">Clean and Unload Compiled Drivers</Button>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -265,8 +265,7 @@
                         
                         <!-- Apply Button -->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" Spacing="10">
-                            <Button Padding="15,10" Background="Salmon"> Exit GUI </Button>
-                            <Button Content="Reset to Defaults" Padding="15,10"/>
+                            <Button x:Name="ExitButton" Click="ExitButton_OnClick" Padding="15,10" Background="Salmon"> Exit GUI </Button>
                             <Button Content="Apply Advanced Settings" Padding="15,10" Click="SaveSettingsButton_OnClick"/>
                         </StackPanel>
                     </StackPanel>

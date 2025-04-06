@@ -1,8 +1,8 @@
+//DAMFC-GUI v 1.13
+
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -97,6 +97,17 @@ public partial class MainWindow : Window
     
         SendCommand(command);
     }
+    
+    public void UnloadDrivers()
+    {
+        var command = new
+        {
+            type = "unload_drivers",
+        };
+    
+        SendCommand(command);
+    }
+
 
     public void CleanDrivers()
     {
@@ -261,6 +272,7 @@ public partial class MainWindow : Window
     private void Clean_Drivers_Button_OnClick(object? sender, RoutedEventArgs e)
     {
         CleanDrivers();
+        UnloadDrivers();
     }
 
     private void ReloadCompiledDriversButton_OnClick(object? sender, RoutedEventArgs e)
@@ -272,5 +284,10 @@ public partial class MainWindow : Window
     {
         CompileDrivers();
         LoadDrivers();
+    }
+
+    private void ExitButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        this.Close();
     }
 }

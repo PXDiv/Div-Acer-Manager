@@ -1,4 +1,4 @@
-# DAMFC_Daemon v0.8.1 
+# DAMFC_Daemon v0.8.2 
 
 import os
 import json
@@ -259,6 +259,9 @@ class FanControlDaemon:
                 DriverManager.remove_driver()
                 DriverManager.remove_fan_control_files()
                 DriverManager.ensure_driver_loaded()
+
+            elif command['type'] == 'unload_drivers':
+                DriverManager.remove_driver()
             
             elif command['type'] == 'compile_drivers':
                 DriverManager.compile_driver()
