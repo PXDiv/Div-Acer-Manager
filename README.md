@@ -54,7 +54,7 @@ Most **Nitro** and **Predator** models from recent years are supported.
 2. Extract the archive.
 3. Run the setup script:
    ```bash
-   ./Setup.sh
+   ./SetupDrivers.sh
    ```
 4. Choose option `1` for installation.
 5. Reboot your system.
