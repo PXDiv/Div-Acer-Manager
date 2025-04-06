@@ -1,0 +1,277 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="DAFC_GUI.MainWindow"
+        Title="Div Acer Manager"
+        Width="1000" Height="700"
+        Background="#004aad"
+        MinWidth="640" MinHeight="480"
+        
+        WindowStartupLocation="CenterScreen"
+>
+       
+        
+    <Grid Margin="0, 10,0,0">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- App Header -->
+        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" >
+            <Image Source="a Dark Transparent.png" Width="48" Height="48" HorizontalAlignment="Left" ></Image>
+        <StackPanel Margin="0,0,0,0"  >
+            <TextBlock Foreground="WhiteSmoke" Text="DAM Fan Controls" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <TextBlock Foreground="WhiteSmoke" Text="Acer WMI Fan Drivers on Linux" Opacity="0.7"/>
+            <Line Width="100"></Line>
+        </StackPanel>
+        </StackPanel>
+        
+        <!-- Quick Access Buttons -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right" Margin="0,0,10,0">
+            <Button x:Name="QAButton1" Height="45" Foreground="Azure"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Content="{Binding ElementName=QASlider1, Path=Value}"
+                    CommandParameter="{Binding ElementName=QASlider1, Path=Value}"
+                    Click="QuickStepButton_OnClick"/>
+
+            <Button x:Name="QAButton2" Height="45" Foreground="Azure"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Content="{Binding ElementName=QASlider2, Path=Value}"
+                    CommandParameter="{Binding ElementName=QASlider2, Path=Value}"
+                    Click="QuickStepButton_OnClick"/>
+            <Button x:Name="MaxSpeedButton" Height="45" Width="50" Foreground="Azure" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="MaxSpeedButton_OnClick">Max</Button>
+
+        </StackPanel>
+        
+
+        <!-- Main Content Area -->
+        <TabControl  Grid.Row="1" Margin="10"  Background="WhiteSmoke" CornerRadius="10">
+            <!-- Dynamic Fan Controls Tab -->
+            <TabItem Header="Dynamic Fan Controls">
+                <ScrollViewer>
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Dynamic Fan Control Settings"  FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="Set temperature thresholds for automatic fan speed adjustments" Opacity="0.7" Margin="0,0,0,20" />
+                        <Grid HorizontalAlignment="Stretch" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="*"/> 
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Checkbox in the center -->
+                            <CheckBox Grid.Column="0" x:Name="DynamicFanControlCheckBox" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" Click="DynamicFanControlCheckBox_OnClick">
+                                Enable Dynamic Fan Controls
+                            </CheckBox>
+    
+                            <!-- Info text on the right -->
+                            <TextBlock Grid.Column="0" Text="* Temperature values are in Celsius" FontStyle="Italic" IsVisible="{Binding IsChecked, ElementName=DynamicFanControlCheckBox}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,0,0"/>
+                        </Grid>
+                        <!-- Dynamic Fan Control Sliders -->
+                        <Grid IsVisible="{Binding IsChecked, ElementName=DynamicFanControlCheckBox}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            
+                            
+                            <!-- Row Headers -->
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Threshold 1:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Threshold 2:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Threshold 3:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Threshold 4:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Threshold 5:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Threshold 6:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                            <!-- Sliders -->
+                            <Slider x:Name="T1Slider" Grid.Row="0" Grid.Column="1" Minimum="512" Maximum="2560" TickFrequency="128" IsSnapToTickEnabled="True" Value="512" Margin="0,5" />
+                            <Slider x:Name="T2Slider" Grid.Row="1" Grid.Column="1" Minimum="512" Maximum="2560" TickFrequency="128" IsSnapToTickEnabled="True" Value="768" Margin="0,5"/>
+                            <Slider x:Name="T3Slider" Grid.Row="2" Grid.Column="1" Minimum="512" Maximum="2560" TickFrequency="128" IsSnapToTickEnabled="True" Value="1024" Margin="0,5"/>
+                            <Slider x:Name="T4Slider" Grid.Row="3" Grid.Column="1" Minimum="512" Maximum="2560" TickFrequency="128" IsSnapToTickEnabled="True" Value="1280" Margin="0,5"/>
+                            <Slider x:Name="T5Slider" Grid.Row="4" Grid.Column="1" Minimum="512" Maximum="2560" TickFrequency="128" IsSnapToTickEnabled="True" Value="1536" Margin="0,5"/>
+                            <Slider x:Name="T6Slider" Grid.Row="5" Grid.Column="1" Minimum="512" Maximum="2560" TickFrequency="128" IsSnapToTickEnabled="True" Value="1792" Margin="0,5"/>
+
+                            <!-- Fan Speed Values -->
+                            <TextBlock x:Name="T1FanSpeedText" Grid.Row="0" Grid.Column="2" Text="{Binding Value, ElementName=T1Slider, StringFormat='{}{0} over'}"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0" />
+                            <TextBlock x:Name="T2FanSpeedText"  Grid.Row="1" Grid.Column="2" Text="{Binding Value, ElementName=T2Slider, StringFormat='{}{0} over'} " VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0"/>
+                            <TextBlock x:Name="T3FanSpeedText"  Grid.Row="2" Grid.Column="2" Text="{Binding Value, ElementName=T3Slider, StringFormat='{}{0} over'}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0"/>
+                            <TextBlock x:Name="T4FanSpeedText"  Grid.Row="3" Grid.Column="2" Text="{Binding Value, ElementName=T4Slider, StringFormat='{}{0} over'}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0"/>
+                            <TextBlock x:Name="T5FanSpeedText"  Grid.Row="4" Grid.Column="2" Text="{Binding Value, ElementName=T5Slider, StringFormat='{}{0} over'}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0"/>
+                            <TextBlock x:Name="T6FanSpeedText"  Grid.Row="5" Grid.Column="2" Text="{Binding Value, ElementName=T6Slider, StringFormat='{}{0} over'}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0"/>
+
+                            <!-- Temperature Input Boxes -->
+                            <NumericUpDown x:Name="T1TempInput" FormatString="F0" Grid.Row="0" Grid.Column="3" Minimum="20" Maximum="120" Value="40" Width="120" Height="20"/>
+                            <NumericUpDown x:Name="T2TempInput" FormatString="F0" Grid.Row="1" Grid.Column="3" Minimum="20" Maximum="120" Value="50" Width="120" Height="20"/>
+                            <NumericUpDown x:Name="T3TempInput" FormatString="F0" Grid.Row="2" Grid.Column="3" Minimum="20" Maximum="120" Value="60" Width="120" Height="20"/>
+                            <NumericUpDown x:Name="T4TempInput" FormatString="F0" Grid.Row="3" Grid.Column="3" Minimum="20" Maximum="120" Value="70" Width="120" Height="20"/>
+                            <NumericUpDown x:Name="T5TempInput" FormatString="F0" Grid.Row="4" Grid.Column="3" Minimum="20" Maximum="120" Value="80" Width="120" Height="20"/>
+                            <NumericUpDown x:Name="T6TempInput" FormatString="F0" Grid.Row="5" Grid.Column="3" Minimum="20" Maximum="120" Value="90" Width="120" Height="20"/>
+                        </Grid>
+                        
+                        <!-- Apply Button -->
+                        <Button Content="Apply Temperature Thresholds" HorizontalAlignment="Right" Margin="0,20,0,0" Padding="15,5 " Height="35" VerticalContentAlignment="Center" Click="SaveSettingsButton_OnClick" IsVisible="{Binding IsChecked, ElementName=DynamicFanControlCheckBox}"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Manual Fan Controls Tab -->
+            <TabItem Header="Manual Fan Controls">
+                <ScrollViewer>
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Manual Fan Control Settings" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="Directly control fan speeds manually" Opacity="0.7" Margin="0,0,0,20"/>
+                        
+                        <!-- Global Fan Control -->
+                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5">
+                            <StackPanel>
+                                <TextBlock Text="All Fans" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Slider x:Name="AllFanSlider" Grid.Column="0" Minimum="512" Maximum="2560" TickFrequency="128" IsSnapToTickEnabled="True" Value="1280" ValueChanged="AllFanSlider_OnValueChanged"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding #AllFanSlider.Value}" VerticalAlignment="Center" Margin="10,0,0,0" Width="80"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Individual Fan Controls -->
+                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5" Margin="0,20,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Individual Fans" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                                
+                                <!-- CPU Fan -->
+                                <Grid Margin="0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="CPU Fan:" VerticalAlignment="Center" Margin="0,0,10,0" Width="80"/>
+                                    <Slider x:Name="CpuFanSlider" Grid.Column="1" Minimum="512" Maximum="2560" TickFrequency="128" IsSnapToTickEnabled="True" Value="1536"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding #CpuFanSlider.Value}" VerticalAlignment="Center" Margin="10,0,0,0" Width="80"/>
+                                </Grid>
+                                
+                                <!-- GPU Fan -->
+                                <Grid Margin="0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="GPU Fan:" VerticalAlignment="Center" Margin="0,0,10,0" Width="80"/>
+                                    <Slider Grid.Column="1" x:Name="GpuFanSlider" Minimum="512" Maximum="2560" TickFrequency="128" IsSnapToTickEnabled="True" Value="1792"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding #GpuFanSlider.Value}" VerticalAlignment="Center" Margin="10,0,0,0" Width="80"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Apply Button -->
+                        <Button Content="Apply Fan Settings" HorizontalAlignment="Right" Margin="0,20,0,0" Padding="15,10" Click="ManualSettingApplyButton_OnClick"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Advanced Settings Tab -->
+            <TabItem Header="Advanced Settings">
+                <ScrollViewer>
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Advanced Settings" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="Configure global speed limits for all fans" Opacity="0.7" Margin="0,0,0,20"/>
+                        
+                        <!-- Speed Limits -->
+                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5">
+                            <StackPanel>
+                                <TextBlock Text="WMI Speed Limits" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                                <TextBlock TextWrapping="Wrap" Text="Acer sets these values internally for WMI to control fan speed limits. Different models have different ranges (e.g., 512-2650 for Nitro 15, 64-256 for Nitro 16). Using incorrect values may stop the fan entirely, so enter them carefully." Opacity="0.7" Margin="0,0,0,15"/>
+                                <StackPanel Orientation="Horizontal" Spacing="20">
+                                <!-- Minimum Speed Setting -->
+                                <Grid Margin="0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Minimum Fan Value:" VerticalAlignment="Center" Margin="0,0,15,0" Width="150"/>
+                                    <NumericUpDown x:Name="MinSpeedInput" Grid.Column="1" Minimum="0" Value="512" Increment="128" Width="200" Watermark="Value must be multiple of 128"/>
+                                </Grid>
+                                
+                                <!-- Maximum Speed Setting -->
+                                <Grid Margin="0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0"  Text="Maximum Fan Value:" VerticalAlignment="Center" Margin="0,0,15,0" Width="150"/>
+                                    <NumericUpDown x:Name="MaxSpeedInput" Grid.Column="1" Minimum="0"  Value="2560" Increment="128" Width="200" Watermark="Value must be multiple of 128"/>
+                                </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Stretch">
+                        <!-- SpeedStep Settings -->
+                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5" Margin="0,20,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Quick Access Buttons" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                                <StackPanel Orientation="Vertical" Spacing="5">
+                                    <StackPanel>
+                                        <TextBlock> Quick Access Speed 1: </TextBlock>
+                                        <Slider x:Name="QASlider1" Minimum="{Binding #MinSpeedInput.Value}" Maximum="{Binding #MaxSpeedInput.Value}" Value="1024" TickFrequency="128" IsSnapToTickEnabled="True" Width="200"></Slider>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock> Quick Access Speed 2: </TextBlock>
+                                        <Slider x:Name="QASlider2" Minimum="{Binding #MinSpeedInput.Value}" Maximum="{Binding #MaxSpeedInput.Value}"  Value="1920" TickFrequency="128" IsSnapToTickEnabled="True" Width="200"></Slider>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!-- Additional Settings
+                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5" Margin="0,20,0,0">
+                            <StackPanel>
+                                <TextBlock Text="System Settings" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                                
+                                <CheckBox Content="Start application with system" IsChecked="True" Margin="0,5"/>
+                                <CheckBox Content="Show notification icon" IsChecked="True" Margin="0,5"/>
+                                <CheckBox Content="Start minimized" IsChecked="False" Margin="0,5"/>
+                                <CheckBox Content="Auto-apply settings on temperature change" IsChecked="True" Margin="0,5"/>
+                            </StackPanel>
+                        </Border>
+                         -->
+                        
+                        <!-- Daemon Commands -->
+                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5" Margin="0,20,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Daemon Commands" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                                <StackPanel Orientation="Vertical" Spacing="20">
+                                    <Button x:Name="CompileAndLoadDriversButton" Click="CompileAndLoadDriversButton_OnClick">Compile and Load Drivers</Button>
+                                    <Button x:Name="ReloadCompiledDriversButton" Click="ReloadCompiledDriversButton_OnClick">Reload Compiled Drivers</Button>
+                                    <Button x:Name="CleanDriversButton" Click="Clean_Drivers_Button_OnClick">Clean Compiled Drivers</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        </StackPanel>
+                        
+                        <!-- Apply Button -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" Spacing="10">
+                            <Button Padding="15,10" Background="Salmon"> Exit GUI </Button>
+                            <Button Content="Reset to Defaults" Padding="15,10"/>
+                            <Button Content="Apply Advanced Settings" Padding="15,10" Click="SaveSettingsButton_OnClick"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
