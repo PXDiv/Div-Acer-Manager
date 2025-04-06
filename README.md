@@ -1,8 +1,14 @@
-# DAM Fan Controls for Acer Nitro & Predator (Linux)
+<h1>
+  <img src="https://github.com/user-attachments/assets/3b24a278-6c55-461c-9a15-0ca465c26479" alt="fan-control-icon" height="60" style="vertical-align: middle; margin-right: 8px;">
+  DAM Fan Controls for Acer Nitro & Predator (Linux)
+</h1>
+
 Fan control and thermal management suite for Acer Nitro &amp; Predator laptops on Linux. Features secure WMI-based driver, intelligent background daemon, and a modern Avalonia-based GUI.
 
 **DAM Fan Controls** is a powerful thermal management tool for newer **Acer Nitro** and **Predator** laptops running Linux.  
 It uses the WMI interface to provide **dynamic fan control**, backed by a secure kernel driver, a smart background **daemon**, and a modern **GUI written in C# using Avalonia UI**.
+
+![Screenshot From 2025-04-06 20-17-46](https://github.com/user-attachments/assets/df9e2121-2254-415f-ad17-1b09a06d83b7)
 
 ---
 
