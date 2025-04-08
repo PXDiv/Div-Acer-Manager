@@ -1,4 +1,6 @@
-# DAMFC_DriverManager v0.2.3
+# DAMFC_DriverManager v0.3.0
+# With Battery Functions to be implemented later in daemon
+
 import os
 import subprocess
 import logging
@@ -9,6 +11,13 @@ class DriverManager:
     DRIVER_DIR = "NitroDrivers"
     MODULE_NAME = "acer_nitro_gaming_driver2.ko"
     MODULE_PATH = os.path.join(DRIVER_DIR, MODULE_NAME)
+    
+    # Battery control paths
+    BATTERY_MODULE_NAME = "acer-wmi-battery"
+    BATTERY_SYSFS_PATH = "/sys/bus/wmi/drivers/acer-wmi-battery"
+    BATTERY_HEALTH_PATH = os.path.join(BATTERY_SYSFS_PATH, "health_mode")
+    BATTERY_CALIBRATION_PATH = os.path.join(BATTERY_SYSFS_PATH, "calibration_mode")
+    BATTERY_TEMPERATURE_PATH = os.path.join(BATTERY_SYSFS_PATH, "temperature")
     
     @staticmethod
     def is_driver_loaded():
@@ -152,6 +161,12 @@ class DriverManager:
             "device_files": {
                 "fan1": os.path.exists("/dev/fan1"),
                 "fan2": os.path.exists("/dev/fan2")
+            },
+            "battery_driver": {
+                "is_loaded": DriverManager.is_battery_driver_loaded(),
+                "health_mode": DriverManager.get_battery_health_mode(),
+                "calibration_mode": DriverManager.get_battery_calibration_mode(),
+                "temperature": DriverManager.get_battery_temperature(),
             }
         }
     
@@ -181,3 +196,174 @@ class DriverManager:
             return False
         
         return DriverManager.load_driver()
+    
+    # Battery driver management methods
+    @staticmethod
+    def is_battery_driver_loaded():
+        """Check if the Acer WMI battery driver is loaded."""
+        try:
+            result = subprocess.run(["lsmod"], capture_output=True, text=True)
+            is_loaded = DriverManager.BATTERY_MODULE_NAME in result.stdout
+            logging.info(f"Battery driver status check: {DriverManager.BATTERY_MODULE_NAME} is {'loaded' if is_loaded else 'not loaded'}")
+            return is_loaded
+        except Exception as e:
+            logging.error(f"Error checking if battery driver is loaded: {e}")
+            return False
+    
+    @staticmethod
+    def load_battery_driver():
+        """Load the Acer WMI battery driver."""
+        try:
+            logging.info(f"Loading Acer WMI battery driver: {DriverManager.BATTERY_MODULE_NAME}")
+            result = subprocess.run(["sudo", "modprobe", DriverManager.BATTERY_MODULE_NAME], 
+                                   capture_output=True, text=True)
+            
+            if result.returncode == 0:
+                logging.info("Battery driver loaded successfully")
+                return True
+            else:
+                logging.error(f"Failed to load battery driver: {result.stderr}")
+                return False
+        except Exception as e:
+            logging.error(f"Error loading battery driver: {e}")
+            return False
+    
+    @staticmethod
+    def unload_battery_driver():
+        """Unload the Acer WMI battery driver."""
+        try:
+            logging.info(f"Unloading Acer WMI battery driver: {DriverManager.BATTERY_MODULE_NAME}")
+            result = subprocess.run(["sudo", "rmmod", DriverManager.BATTERY_MODULE_NAME], 
+                                   capture_output=True, text=True)
+            
+            if result.returncode == 0:
+                logging.info("Battery driver unloaded successfully")
+                return True
+            else:
+                logging.error(f"Failed to unload battery driver: {result.stderr}")
+                return False
+        except Exception as e:
+            logging.error(f"Error unloading battery driver: {e}")
+            return False
+    
+    @staticmethod
+    def ensure_battery_driver_loaded():
+        """Make sure the battery driver is loaded, loading it if necessary."""
+        if DriverManager.is_battery_driver_loaded():
+            logging.info("Battery driver is already loaded")
+            return True
+        else:
+            return DriverManager.load_battery_driver()
+    
+    @staticmethod
+    def get_battery_health_mode():
+        """Get the current battery health mode state."""
+        try:
+            if not DriverManager.is_battery_driver_loaded():
+                return -1  # Driver not loaded
+                
+            with open(DriverManager.BATTERY_HEALTH_PATH, 'r') as f:
+                value = int(f.read().strip())
+                return value
+        except FileNotFoundError:
+            logging.error("Battery health mode file not found")
+            return -1
+        except Exception as e:
+            logging.error(f"Error reading battery health mode: {e}")
+            return -1
+    
+    @staticmethod
+    def set_battery_health_mode(enabled):
+        """Set the battery health mode."""
+        try:
+            if not DriverManager.is_battery_driver_loaded():
+                logging.error("Cannot set health mode: Battery driver not loaded")
+                return False
+                
+            value = 1 if enabled else 0
+            with open(DriverManager.BATTERY_HEALTH_PATH, 'w') as f:
+                f.write(str(value))
+            logging.info(f"Battery health mode set to: {enabled}")
+            return True
+        except FileNotFoundError:
+            logging.error("Battery health mode file not found")
+            return False
+        except Exception as e:
+            logging.error(f"Error setting battery health mode: {e}")
+            return False
+    
+    @staticmethod
+    def get_battery_calibration_mode():
+        """Get the current battery calibration mode state."""
+        try:
+            if not DriverManager.is_battery_driver_loaded():
+                return -1  # Driver not loaded
+                
+            with open(DriverManager.BATTERY_CALIBRATION_PATH, 'r') as f:
+                value = int(f.read().strip())
+                return value
+        except FileNotFoundError:
+            logging.error("Battery calibration mode file not found")
+            return -1
+        except Exception as e:
+            logging.error(f"Error reading battery calibration mode: {e}")
+            return -1
+    
+    @staticmethod
+    def set_battery_calibration_mode(enabled):
+        """Set the battery calibration mode."""
+        try:
+            if not DriverManager.is_battery_driver_loaded():
+                logging.error("Cannot set calibration mode: Battery driver not loaded")
+                return False
+                
+            value = 1 if enabled else 0
+            with open(DriverManager.BATTERY_CALIBRATION_PATH, 'w') as f:
+                f.write(str(value))
+            logging.info(f"Battery calibration mode set to: {enabled}")
+            return True
+        except FileNotFoundError:
+            logging.error("Battery calibration mode file not found")
+            return False
+        except Exception as e:
+            logging.error(f"Error setting battery calibration mode: {e}")
+            return False
+    
+    @staticmethod
+    def get_battery_temperature():
+        """Get the current battery temperature."""
+        try:
+            if not DriverManager.is_battery_driver_loaded():
+                return -1  # Driver not loaded
+                
+            with open(DriverManager.BATTERY_TEMPERATURE_PATH, 'r') as f:
+                # Temperature is in 0.1 degrees Celsius
+                value = int(f.read().strip()) / 100.0
+                return value
+        except FileNotFoundError:
+            logging.error("Battery temperature file not found")
+            return -1
+        except Exception as e:
+            logging.error(f"Error reading battery temperature: {e}")
+            return -1
+    
+    @staticmethod
+    def apply_battery_settings(health_mode=None, calibration_mode=None):
+        """Apply battery settings if battery driver is loaded."""
+        if not DriverManager.is_battery_driver_loaded():
+            logging.warning("Cannot apply battery settings: Driver not loaded")
+            return False
+        
+        success = True
+        
+        # Apply health mode if specified
+        if health_mode is not None:
+            if not DriverManager.set_battery_health_mode(health_mode):
+                success = False
+        
+        # Apply calibration mode if specified
+        if calibration_mode is not None:
+            if not DriverManager.set_battery_calibration_mode(calibration_mode):
+                success = False
+        
+        return success

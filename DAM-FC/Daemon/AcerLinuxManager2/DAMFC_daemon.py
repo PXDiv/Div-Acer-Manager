@@ -1,4 +1,5 @@
-# DAMFC_Daemon v0.8.2 
+# DAMFC_Daemon v0.8.3
+# Current Daemon, Will be updated to support Battery Charge limit and maybe Battery Calibration
 
 import os
 import json
@@ -110,25 +111,25 @@ class FanControlDaemon:
             return int(temp)
         except Exception as e:
             logging.error(f"Could not read GPU temperature: {e}")
-            return 0 
-
+            return 0
+    
     def set_fan_speed(self, fan_number, speed):
         try:
             if 0 < int(fan_number) < 3:
                 fan_file = f'/dev/fan{fan_number}'
-                # logging.info(f"Attempting to set Fan {fan_number} speed to {speed}")
-                
+    
                 # Validate speed is within acceptable range
                 if speed < self.config.get('min_speed', 640):
                     speed = self.config.get('min_speed', 640)
                     logging.warning(f"Speed adjusted to minimum: {speed}")
-                
+    
                 if speed > self.config.get('max_speed', 2560):
                     speed = self.config.get('max_speed', 2560)
                     logging.warning(f"Speed adjusted to maximum: {speed}")
-                
+    
+                # Direct write to the fan device file
                 with open(fan_file, 'w') as f:
-                    os.system(f"sudo echo {speed} | tee /dev/fan{fan_number}")
+                    f.write(str(speed) + '\n')
                 logging.info(f"Successfully set Fan {fan_number} to speed {speed}")
             else:
                 logging.error(f"Invalid fan number: {fan_number}")
@@ -138,7 +139,7 @@ class FanControlDaemon:
             logging.error(f"Fan control file not found: /dev/fan{fan_number}")
         except Exception as e:
             logging.error(f"Could not set fan speed: {e}")
-
+            
     def dynamic_fan_control(self):
 
         logging.info("Starting dynamic fan control thread")
