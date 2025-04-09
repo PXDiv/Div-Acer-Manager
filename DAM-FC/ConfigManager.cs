@@ -134,18 +134,20 @@ namespace DAFC_GUI
                 dynamicCheckBox.IsChecked = config.dynamic_mode;
             }
             
+
+            
             // Update temperature step controls if they exist
-            UpdateTempStepUI(window, "T1TextBox", "T1Slider", config.temp_steps[0], config);
-            UpdateTempStepUI(window, "T2TextBox", "T2Slider", config.temp_steps[1], config);
-            UpdateTempStepUI(window, "T3TextBox", "T3Slider", config.temp_steps[2], config);
-            UpdateTempStepUI(window, "T4TextBox", "T4Slider", config.temp_steps[3], config);
-            UpdateTempStepUI(window, "T5TextBox", "T5Slider", config.temp_steps[4], config);
-            UpdateTempStepUI(window, "T6TextBox", "T6Slider", config.temp_steps[5], config);
+            UpdateTempStepUI(window, "T1TempInput", "T1Slider", config.temp_steps[0], config);
+            UpdateTempStepUI(window, "T2TempInput", "T2Slider", config.temp_steps[1], config);
+            UpdateTempStepUI(window, "T3TempInput", "T3Slider", config.temp_steps[2], config);
+            UpdateTempStepUI(window, "T4TempInput", "T4Slider", config.temp_steps[3], config);
+            UpdateTempStepUI(window, "T5TempInput", "T5Slider", config.temp_steps[4], config);
+            UpdateTempStepUI(window, "T6TempInput", "T6Slider", config.temp_steps[5], config);
         }
         
         private void UpdateTempStepUI(Window window, string tempControlName, string speedControlName, TempStep step, ConfigSettings config)
         {
-            var tempControl = window.FindControl<TextBox>(tempControlName);
+            var tempControl = window.FindControl<NumericUpDown>(tempControlName);
             var speedControl = window.FindControl<Slider>(speedControlName);
             
             if (tempControl != null)

@@ -7,7 +7,7 @@
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">/home/div/.nuget/packages/</NuGetPackageRoot>
     <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">/home/div/.nuget/packages/</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
-    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.12.2</NuGetToolVersion>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.13.1</NuGetToolVersion>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="/home/div/.nuget/packages/" />
@@ -15,16 +15,13 @@
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)skiasharp.nativeassets.webassembly/2.88.8/buildTransitive/netstandard1.0/SkiaSharp.NativeAssets.WebAssembly.props" Condition="Exists('$(NuGetPackageRoot)skiasharp.nativeassets.webassembly/2.88.8/buildTransitive/netstandard1.0/SkiaSharp.NativeAssets.WebAssembly.props')" />
     <Import Project="$(NuGetPackageRoot)nugetizer/1.2.4/build/NuGetizer.props" Condition="Exists('$(NuGetPackageRoot)nugetizer/1.2.4/build/NuGetizer.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.net.illink.tasks/9.0.3/build/Microsoft.NET.ILLink.Tasks.props" Condition="Exists('$(NuGetPackageRoot)microsoft.net.illink.tasks/9.0.3/build/Microsoft.NET.ILLink.Tasks.props')" />
     <Import Project="$(NuGetPackageRoot)harfbuzzsharp.nativeassets.webassembly/7.3.0.3-preview.2.2/buildTransitive/netstandard1.0/HarfBuzzSharp.NativeAssets.WebAssembly.props" Condition="Exists('$(NuGetPackageRoot)harfbuzzsharp.nativeassets.webassembly/7.3.0.3-preview.2.2/buildTransitive/netstandard1.0/HarfBuzzSharp.NativeAssets.WebAssembly.props')" />
     <Import Project="$(NuGetPackageRoot)avalonia/11.2.1/buildTransitive/Avalonia.props" Condition="Exists('$(NuGetPackageRoot)avalonia/11.2.1/buildTransitive/Avalonia.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgNuGetizer Condition=" '$(PkgNuGetizer)' == '' ">/home/div/.nuget/packages/nugetizer/1.2.4</PkgNuGetizer>
+    <PkgMicrosoft_NET_ILLink_Tasks Condition=" '$(PkgMicrosoft_NET_ILLink_Tasks)' == '' ">/home/div/.nuget/packages/microsoft.net.illink.tasks/9.0.3</PkgMicrosoft_NET_ILLink_Tasks>
     <PkgAvalonia_BuildServices Condition=" '$(PkgAvalonia_BuildServices)' == '' ">/home/div/.nuget/packages/avalonia.buildservices/0.0.29</PkgAvalonia_BuildServices>
     <PkgAvalonia Condition=" '$(PkgAvalonia)' == '' ">/home/div/.nuget/packages/avalonia/11.2.1</PkgAvalonia>
-    <PkgAvalonia_Themes_Fluent Condition=" '$(PkgAvalonia_Themes_Fluent)' == '' ">/home/div/.nuget/packages/avalonia.themes.fluent/11.2.1</PkgAvalonia_Themes_Fluent>
-    <PkgAvalonia_Fonts_Inter Condition=" '$(PkgAvalonia_Fonts_Inter)' == '' ">/home/div/.nuget/packages/avalonia.fonts.inter/11.2.1</PkgAvalonia_Fonts_Inter>
-    <PkgAvalonia_Diagnostics Condition=" '$(PkgAvalonia_Diagnostics)' == '' ">/home/div/.nuget/packages/avalonia.diagnostics/11.2.1</PkgAvalonia_Diagnostics>
-    <PkgAvalonia_Desktop Condition=" '$(PkgAvalonia_Desktop)' == '' ">/home/div/.nuget/packages/avalonia.desktop/11.2.1</PkgAvalonia_Desktop>
   </PropertyGroup>
 </Project>

@@ -5,7 +5,7 @@
         Width="1000" Height="700"
         Background="#004aad"
         MinWidth="640" MinHeight="480"
-        
+        Icon="a Dark Transparent.png"
         WindowStartupLocation="CenterScreen"
 >
        
@@ -21,8 +21,8 @@
         <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" >
             <Image Source="a Dark Transparent.png" Width="48" Height="48" HorizontalAlignment="Left" ></Image>
         <StackPanel Margin="0,0,0,0"  >
-            <TextBlock Foreground="WhiteSmoke" Text="DAM Fan Controls" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left"/>
-            <TextBlock Foreground="WhiteSmoke" Text="Acer WMI Fan Drivers on Linux" Opacity="0.7"/>
+            <TextBlock Foreground="WhiteSmoke" Text="Div Acer Manager" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <TextBlock Foreground="WhiteSmoke" Text="Acer WMI Drivers on Linux" Opacity="0.7"/>
             <Line Width="100"></Line>
         </StackPanel>
         </StackPanel>
@@ -181,6 +181,30 @@
                         <Button Content="Apply Fan Settings" HorizontalAlignment="Right" Margin="0,20,0,0" Padding="15,10" Click="ManualSettingApplyButton_OnClick"/>
                     </StackPanel>
                 </ScrollViewer>
+            </TabItem>
+            
+            <!-- Battery Settings Tab -->
+            <TabItem Header="Battery Controls">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Battery Settings"  FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="Control how the battery and charging Behaves" Opacity="0.7" Margin="0,0,0,20" />
+                <StackPanel Spacing="10">
+                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5" Margin="0,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Battery Charging Limit" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        <TextBlock TextWrapping="Wrap" Text="Turns on Health Mode on the Device. Prevents charging above 80% to ensure battery longevity" Opacity="0.7" Margin="0,0,0,15"/>
+                        <CheckBox>Turn On Charging Limit</CheckBox>
+                    </StackPanel>
+                </Border>
+                        <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5" Margin="0,0,0,0">
+                            <StackPanel>
+                                <TextBlock Text="Battery Calibration" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                                <TextBlock TextWrapping="Wrap" Text="Calibrates the Battery to better match the percentage" Opacity="0.7" Margin="0,0,0,15"/>
+                                <Button>Start Battery Calibration</Button>
+                            </StackPanel>
+                        </Border>
+                </StackPanel>
+                </StackPanel>
             </TabItem>
 
             <!-- Advanced Settings Tab -->
