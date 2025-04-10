@@ -107,6 +107,19 @@ Check for any errors and search online if necessary. You can also check logs at:
 /var/log/acer_fan_control/
 ```
 
+### 3. Successfully Installed, but Fan Speeds Not Changing
+This usually occurs when the driver hasn't been properly compiled or loaded into the kernel. To resolve this:
+
+- Go to the *Advanced Controls* tab.
+- Click *Unload and Clean Compiled* Drivers.
+- Then click *Compile and Load Drivers*.
+- (Optional) Click Reload Compiled Drivers for good measure.
+
+Now try setting the fan speeds manually
+
+### 4. Not Working after a Update or a Reinstallation
+Same Solution as #3
+
 ---
 
 ## ❤️ Credits
