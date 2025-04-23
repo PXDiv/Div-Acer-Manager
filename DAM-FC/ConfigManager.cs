@@ -115,6 +115,7 @@ namespace DAFC_GUI
             // Get controls from the window
             var cpuFanSlider = window.FindControl<Slider>("CpuFanSlider");
             var gpuFanSlider = window.FindControl<Slider>("GpuFanSlider");
+            var mixedFanSlider = window.FindControl<Slider>("AllFanSlider");
             var dynamicCheckBox = window.FindControl<CheckBox>("DynamicFanControlCheckBox");
             
             if (cpuFanSlider != null)
@@ -127,6 +128,12 @@ namespace DAFC_GUI
             {
                 gpuFanSlider.Minimum = config.min_speed;
                 gpuFanSlider.Maximum = config.max_speed;
+            }
+            
+            if (mixedFanSlider != null)
+            {
+                mixedFanSlider.Minimum = config.min_speed;
+                mixedFanSlider.Maximum = config.max_speed;
             }
             
             if (dynamicCheckBox != null)

@@ -1,4 +1,5 @@
-# DAMFC_DriverManager v0.3.0
+# DAMFC_DriverManager v0.3.1
+# removed sudo implementations
 # With Battery Functions to be implemented later in daemon
 
 import os
@@ -39,7 +40,7 @@ class DriverManager:
             module_name = DriverManager.MODULE_NAME.split(".")[0]
             logging.info(f"Attempting to remove driver: {module_name}")
             
-            result = subprocess.run(["sudo", "rmmod", module_name], capture_output=True, text=True)
+            result = subprocess.run([ "rmmod", module_name], capture_output=True, text=True)
             
             if result.returncode == 0:
                 logging.info("Driver removed successfully")
@@ -59,7 +60,7 @@ class DriverManager:
             for fan in ["/dev/fan1", "/dev/fan2"]:
                 if os.path.exists(fan):
                     logging.info(f"Removing fan control file: {fan}")
-                    result = subprocess.run(["sudo", "rm", "-f", fan], capture_output=True, text=True)
+                    result = subprocess.run([ "rm", "-f", fan], capture_output=True, text=True)
                     if result.returncode != 0:
                         logging.error(f"Failed to remove {fan}: {result.stderr}")
                         success = False
@@ -138,7 +139,7 @@ class DriverManager:
             
             logging.info(f"Loading driver: {DriverManager.MODULE_PATH}")
             
-            result = subprocess.run(["sudo", "insmod", os.path.abspath(DriverManager.MODULE_PATH)], 
+            result = subprocess.run([ "insmod", os.path.abspath(DriverManager.MODULE_PATH)], 
                                     capture_output=True, text=True)
             
             if result.returncode == 0:
@@ -215,7 +216,7 @@ class DriverManager:
         """Load the Acer WMI battery driver."""
         try:
             logging.info(f"Loading Acer WMI battery driver: {DriverManager.BATTERY_MODULE_NAME}")
-            result = subprocess.run(["sudo", "modprobe", DriverManager.BATTERY_MODULE_NAME], 
+            result = subprocess.run(["modprobe", DriverManager.BATTERY_MODULE_NAME], 
                                    capture_output=True, text=True)
             
             if result.returncode == 0:
@@ -233,7 +234,7 @@ class DriverManager:
         """Unload the Acer WMI battery driver."""
         try:
             logging.info(f"Unloading Acer WMI battery driver: {DriverManager.BATTERY_MODULE_NAME}")
-            result = subprocess.run(["sudo", "rmmod", DriverManager.BATTERY_MODULE_NAME], 
+            result = subprocess.run(["rmmod", DriverManager.BATTERY_MODULE_NAME], 
                                    capture_output=True, text=True)
             
             if result.returncode == 0:

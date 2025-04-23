@@ -1,4 +1,4 @@
-# DAMFC_Daemon v0.8.3
+# DAMFC_Daemon v0.8.6
 # Current Daemon, Will be updated to support Battery Charge limit and maybe Battery Calibration
 
 import os
@@ -14,11 +14,14 @@ from DriverManager import DriverManager
 import HardwareStatus
 
 class FanControlDaemon:
+
+    daemonVersion = "0.8.6"
+
     def __init__(self, config_path='/var/lib/acer_fan_control/config.json'):
         # Setup logging with more detailed output
         self.setup_logging()
         
-        logging.info("Initializing Fan Control Daemon")
+        logging.info(f"Initializing DAM Daemon v{self.daemonVersion}")
         logging.info(f"Config path: {config_path}")
         
         self.config_path = config_path
@@ -35,7 +38,7 @@ class FanControlDaemon:
 
     def setup_logging(self):
         # Ensure log directory exists
-        log_dir = '/var/log/acer_fan_control'
+        log_dir = '/var/log/Div_Acer_Manager_Logs'
         os.makedirs(log_dir, exist_ok=True)
         
         # Configure logging with more detailed format
@@ -169,7 +172,7 @@ class FanControlDaemon:
         logging.info("Dynamic fan control thread stopped")
 
     def start(self):
-        logging.info("Starting Fan Control Daemon")
+        logging.info(f"Starting DAM_FC Daemon v{self.daemonVersion}")
         self.running = True
         
         # Start dynamic fan control in a separate thread
@@ -269,7 +272,7 @@ class FanControlDaemon:
                 
             elif command['type'] == 'load_drivers':
                 DriverManager.load_driver()
-            
+                
             else:
                 logging.warning(f"Unknown command type: {command['type']}")
         except KeyError as e:

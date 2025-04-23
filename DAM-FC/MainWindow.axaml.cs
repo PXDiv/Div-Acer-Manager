@@ -1,8 +1,9 @@
-//DAMFC-GUI v 1.14
+//DAMFC-GUI v 1.20
 
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System;
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -12,12 +13,15 @@ namespace DAFC_GUI;
 
 public partial class MainWindow : Window
 {
+    private static readonly string GuiVersion = "1.20";
     
     private readonly ConfigManager _configManager = new ConfigManager();
-    public ConfigManager.ConfigSettings currentConfig;
+    public ConfigManager.ConfigSettings CurrentConfig;
     public MainWindow()
     {
         InitializeComponent();
+        VersionText.Text = "GUI version: " +
+                           "v" + GuiVersion;
     }
 
     private const string SocketPath = "/var/run/fan_control_daemon.sock";
@@ -29,19 +33,19 @@ public partial class MainWindow : Window
         base.OnOpened(e);
             
         // Load configuration and update UI
-        currentConfig = _configManager.LoadConfig();
-        _configManager.UpdateUI(this, currentConfig);
+        CurrentConfig = _configManager.LoadConfig();
+        _configManager.UpdateUI(this, CurrentConfig);
     }
     
-    public void UpdateConfigAndReloadUI()
+    public void UpdateConfigAndReloadUi()
     {
         UpdateConfig();
         Console.WriteLine("Updated config");
         
         System.Threading.Thread.Sleep(100); // 100ms delay to ensure the file gets saved properly (without this, it causes bugs)
         
-        currentConfig = _configManager.LoadConfig(true);
-        Console.WriteLine(currentConfig.min_speed);
+        CurrentConfig = _configManager.LoadConfig(true);
+        Console.WriteLine(CurrentConfig.min_speed);
         
         _configManager.UpdateUI(this, _configManager.LoadConfig());
         Console.WriteLine("Updated UI Based on Current Config");
@@ -51,7 +55,7 @@ public partial class MainWindow : Window
     
     public void SaveSettingsButton_OnClick(object sender, RoutedEventArgs e)
     {
-        UpdateConfigAndReloadUI();
+        UpdateConfigAndReloadUi();
     }
     
     public void SetFanSpeed(int fanNumber, int speed)
@@ -75,10 +79,9 @@ public partial class MainWindow : Window
         };
         
         SendCommand(command);
-
     }
 
-    public void CompileDrivers()
+    public void CompileFanDrivers()
     {
         var command = new
         {
@@ -88,7 +91,7 @@ public partial class MainWindow : Window
         SendCommand(command);
     }
     
-    public void LoadDrivers()
+    public void LoadFanDrivers()
     {
         var command = new
         {
@@ -98,7 +101,7 @@ public partial class MainWindow : Window
         SendCommand(command);
     }
     
-    public void UnloadDrivers()
+    public void UnloadFanDrivers()
     {
         var command = new
         {
@@ -109,7 +112,7 @@ public partial class MainWindow : Window
     }
 
 
-    public void CleanDrivers()
+    public void CleanFanDrivers()
     {
         var command = new
         {
@@ -119,11 +122,21 @@ public partial class MainWindow : Window
         SendCommand(command);
     }
     
-    public void ReloadCompiledDrivers()
+    public void ReloadCompileFanDrivers()
     {
         var command = new
         {
             type = "reload_complied_drivers",
+        };
+    
+        SendCommand(command);
+    } 
+
+    void SendCommandString(string commandString)
+    {
+        var command = new
+        {
+            type = commandString,
         };
     
         SendCommand(command);
@@ -234,7 +247,7 @@ public partial class MainWindow : Window
         DisableDynamicMode();
     }
 
-    public void DisableDynamicMode()
+    private void DisableDynamicMode()
     {
         SetDynamicMode(false);
         DynamicFanControlCheckBox.IsChecked = false;
@@ -242,7 +255,7 @@ public partial class MainWindow : Window
 
     private void DynamicFanControlCheckBox_OnClick(object? sender, RoutedEventArgs e)
     {
-        SetDynamicMode(DynamicFanControlCheckBox.IsChecked.Value);
+        SetDynamicMode(DynamicFanControlCheckBox.IsChecked != null && DynamicFanControlCheckBox.IsChecked.Value);
         UpdateConfig();
     }
 
@@ -253,8 +266,8 @@ public partial class MainWindow : Window
 
     private void MaxSpeedButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        SetFanSpeed(1, currentConfig.max_speed);
-        SetFanSpeed(2, currentConfig.max_speed);
+        SetFanSpeed(1, CurrentConfig.max_speed);
+        SetFanSpeed(2, CurrentConfig.max_speed);
         DisableDynamicMode();
     }
     
@@ -271,23 +284,34 @@ public partial class MainWindow : Window
 
     private void Clean_Drivers_Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        CleanDrivers();
-        UnloadDrivers();
+        CleanFanDrivers();
+        UnloadFanDrivers();
     }
 
     private void ReloadCompiledDriversButton_OnClick(object? sender, RoutedEventArgs e)
     {
-       ReloadCompiledDrivers();
+       ReloadCompileFanDrivers();
     }
 
     private void CompileAndLoadDriversButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        CompileDrivers();
-        LoadDrivers();
+        CompileFanDrivers();
+        LoadFanDrivers();
     }
 
     private void ExitButton_OnClick(object? sender, RoutedEventArgs e)
     {
         this.Close();
+    }
+
+    private void UpdatesButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        var url = "https://github.com/PXDiv/Div-Acer-Manager/releases";
+        Process.Start("xdg-open", url);
+    }
+
+    private void HealthModeCheckBox_OnClick(object? sender, RoutedEventArgs e)
+    {
+        
     }
 }

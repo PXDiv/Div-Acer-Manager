@@ -1,0 +1,1 @@
+pyinstaller --exclude-module=cryptography --exclude-module=OpenSSL --onefile --clean DAMFC_daemon.py

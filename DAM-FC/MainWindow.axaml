@@ -184,7 +184,7 @@
             </TabItem>
             
             <!-- Battery Settings Tab -->
-            <TabItem Header="Battery Controls">
+            <!-- TabItem Header="Battery Controls">
                     <StackPanel Margin="10">
                         <TextBlock Text="Battery Settings"  FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
                         <TextBlock Text="Control how the battery and charging Behaves" Opacity="0.7" Margin="0,0,0,20" />
@@ -193,7 +193,7 @@
                     <StackPanel>
                         <TextBlock Text="Battery Charging Limit" FontWeight="SemiBold" Margin="0,0,0,15"/>
                         <TextBlock TextWrapping="Wrap" Text="Turns on Health Mode on the Device. Prevents charging above 80% to ensure battery longevity" Opacity="0.7" Margin="0,0,0,15"/>
-                        <CheckBox>Turn On Charging Limit</CheckBox>
+                        <CheckBox x:Name="HealthModeCheckBox" Click="HealthModeCheckBox_OnClick">Turn On Charging Limit</CheckBox>
                     </StackPanel>
                 </Border>
                         <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5" Margin="0,0,0,0">
@@ -205,7 +205,7 @@
                         </Border>
                 </StackPanel>
                 </StackPanel>
-            </TabItem>
+            </-->
 
             <!-- Advanced Settings Tab -->
             <TabItem Header="Advanced Settings">
@@ -218,7 +218,7 @@
                         <Border BorderBrush="#DDDDDD" BorderThickness="1" Padding="15" CornerRadius="5">
                             <StackPanel>
                                 <TextBlock Text="WMI Speed Limits" FontWeight="SemiBold" Margin="0,0,0,15"/>
-                                <TextBlock TextWrapping="Wrap" Text="Acer sets these values internally for WMI to control fan speed limits. Different models have different ranges (e.g., 512-2650 for Nitro 15, 64-256 for Nitro 16). Using incorrect values may stop the fan entirely, so enter them carefully." Opacity="0.7" Margin="0,0,0,15"/>
+                                <TextBlock TextWrapping="Wrap" Text="Acer sets these values internally for WMI to control fan speed limits. Different models have different ranges (e.g., 512-2650 for Nitro 15, 128-512 for Nitro 16). Using incorrect values may stop the fan entirely, so enter them carefully." Opacity="0.7" Margin="0,0,0,15"/>
                                 <StackPanel Orientation="Horizontal" Spacing="20">
                                 <!-- Minimum Speed Setting -->
                                 <Grid Margin="0,10">
@@ -285,12 +285,17 @@
                                 </StackPanel>
                             </StackPanel>
                         </Border>
+                        
                         </StackPanel>
                         
+                            
                         <!-- Apply Button -->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" Spacing="10">
-                            <Button x:Name="ExitButton" Click="ExitButton_OnClick" Padding="15,10" Background="Salmon"> Exit GUI </Button>
+                        <TextBlock x:Name="VersionText" TextWrapping="Wrap" MaxWidth="200" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        </TextBlock>
+                            <Button x:Name="UpdatesButton" Content="Check For Updates" Padding="15,10" Click="UpdatesButton_OnClick"/>
                             <Button Content="Apply Advanced Settings" Padding="15,10" Click="SaveSettingsButton_OnClick"/>
+                            <Button x:Name="ExitButton" Click="ExitButton_OnClick" Padding="15,10" Background="Salmon"> Exit GUI </Button>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
