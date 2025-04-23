@@ -85,6 +85,11 @@ After reboot, the daemon should auto-start, and your fan control should be ready
 
 If things aren't working as expected:
 
+Check logs at:
+```bash
+/var/log/Div_Acer_Manager_Logs
+```
+
 ### 1. Driver Compilation Fails
 Make sure you’ve installed the correct **kernel headers** for your current Linux kernel:
 
@@ -104,8 +109,21 @@ sudo make
 
 Check for any errors and search online if necessary. You can also check logs at:
 ```bash
-/var/log/acer_fan_control/
+/var/log/Div_Acer_Manager_Logs
 ```
+
+### 3. Successfully Installed, but Fan Speeds Not Changing
+This usually occurs when the driver hasn't been properly compiled or loaded into the kernel. To resolve this:
+
+- Go to the *Advanced Controls* tab.
+- Click *Unload and Clean Compiled* Drivers.
+- Then click *Compile and Load Drivers*.
+- (Optional) Click Reload Compiled Drivers for good measure.
+
+Now try setting the fan speeds manually
+
+### 4. Not Working after a Update or a Reinstallation
+Same Solution as #3
 
 ---
 
