@@ -4,6 +4,25 @@
 
 <h1 align="center">DAM Fan Controls for Acer Nitro & Predator (Linux)</h1>
 
+><h2>Note</h2>
+>This App just controls the fan settings and can adjust advanced fan curves
+>
+>For full Nitro/Predator Sense line control functionality on Linux, consider trying the latest Div Acer Manager Max.
+>
+>You can find it here: [Div Acer Manager Max on GitHub](https://github.com/PXDiv/Div-Acer-Manager-Max)
+>
+>Div Acer Manager Max supports:
+>    Performance Profiles (Quiet, Balanced, Performance, Turbo)
+>
+>    Auto and Manual Fan Controls
+>
+>    Battery Limit and Battery Calibration
+>
+>   Keyboard Lighting Control
+>
+>   LCD Override and more
+
+
 **DAM Fan Controls** is a powerful thermal management tool for newer **Acer Nitro** and **Predator** laptops running Linux.  
 It uses the WMI interface to provide **dynamic fan control**, backed by a secure kernel driver, a smart background **daemon**, and a modern **GUI written in C# using Avalonia UI**.
 
